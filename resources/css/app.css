@@ -1,0 +1,58 @@
+@import 'tailwindcss';
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+@source '../**/*.blade.php';
+@source '../**/*.js';
+@source "../views";
+
+@theme {
+    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+        'Segoe UI Symbol', 'Noto Color Emoji';
+}
+
+/* Custom scrollbar style */
+.scrollable {
+  scrollbar-width: thin;
+  scrollbar-color: rgb(88, 126, 239) #f5efe6; /* dark green thumb on beige track */
+}
+
+.scrollable::-webkit-scrollbar {
+  width: 8px;
+}
+
+.scrollable::-webkit-scrollbar-thumb {
+  background-color: #1a4d2e;
+  border-radius: 6px;
+}
+
+.scrollable::-webkit-scrollbar-track {
+  background-color: #f5efe6;
+}
+
+
+.table {
+    width: 100%;
+    font-size: 0.875rem; /* text-sm */
+    text-align: left;
+    border-collapse: collapse;
+    table-layout: fixed;
+}
+
+.table-head{
+    background-color: #bfdbfe; /* bg-blue-200 */
+    color: #374151;            /* text-gray-700 */
+}
+
+.table-body {
+    border-bottom: 1px solid #bfdbfe; /* border-blue-200 */
+    transition: background-color 0.2s ease;
+}
+
+.table-body:hover {
+    background-color: #f9fafb; /* bg-gray-50 */
+}
+
+.bg {
+    background-color: #eff6ff; /* Tailwind bg-blue-50 */
+}
