@@ -40,7 +40,6 @@ const toDate = (s) => (s?.date ? new Date(s.date) : new Date(0));
 const myPreSched = computed(() => {
   const childName = selectedChildProfile?.value.child_name;
   if (!childName || schedulesArr.value.length === 0) {
-    console.log("[DEBUG] No child name or empty schedules");
     return false;
   }
 
