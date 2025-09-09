@@ -3,6 +3,7 @@ import { ref, computed } from "vue";
 import AddSchedule from '../Components/Schedule/AddSchedule.vue'
 import viewAllSchedBasedOnDate from "../Components/AdminComponents/viewAllSchedBasedOnDate.vue";
 
+
 const props = defineProps({
     schedules: Array,
     maternalNames: Array,

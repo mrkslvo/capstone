@@ -21,7 +21,7 @@ class ScheduleController extends Controller
                 'status' => 'missed'
             ]);
 
-        $schedules = Schedule::where('status', '!=', 'done')
+        $schedules = Schedule::where('status', '=', 'pending')
             ->orderBy('date', 'asc')
             ->orderBy('time', 'asc')
             ->get();

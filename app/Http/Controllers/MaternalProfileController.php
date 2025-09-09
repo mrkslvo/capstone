@@ -8,6 +8,7 @@ use App\Models\MaternalProfile;
 use App\Models\MaternalRecord;
 use App\Models\Schedule;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -66,6 +67,8 @@ class MaternalProfileController extends Controller
         ]);
 
         $user = User::create([
+            'fullname' => $maternalProfile->name,
+            'purok' => $maternalProfile->purok,
             'username' => 'parent',
             'role' => 'parent',
             'contact_number' => $maternalProfile->contact_number,
@@ -110,8 +113,17 @@ class MaternalProfileController extends Controller
 
     public function dashboard()
     {
+        $today = Carbon::today()->addDay();
 
-        $schedules = Schedule::where('status', '!=', 'done')->get();
+
+        //  First, update all outdated schedules
+        Schedule::where('date', '<', $today)
+            ->where('status', 'pending')
+            ->update(['status' => 'missed']);
+
+        //  Now fetch fresh data after updating
+        $users = User::all();
+        $schedules = Schedule::where('status', '=', 'pending')->get();
         $totalPregnancies = MaternalProfile::count();
         $newMaternalRegistration = MaternalProfile::where('status', 'ongoing')->count();
         $totalChildren = ChildProfile::count();
@@ -121,7 +133,14 @@ class MaternalProfileController extends Controller
 
         return Inertia::render(
             'Admin/Dashboard',
-            compact('schedules', 'totalPregnancies', 'newMaternalRegistration', 'totalChildren', 'upcomingChildImmunization')
+            compact(
+                'schedules',
+                'totalPregnancies',
+                'newMaternalRegistration',
+                'totalChildren',
+                'upcomingChildImmunization',
+                'users'
+            )
         );
     }
 

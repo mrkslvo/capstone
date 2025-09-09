@@ -41,16 +41,14 @@ const filteredUsers = computed(() =>
     props.users.filter((user) => {
         const username = String(user.username ?? "").toLowerCase();
         const purok = String(user.purok ?? "").toLowerCase();
-        const firstname = String(user.firstname ?? "").toLowerCase();
-        const lastname = String(user.lastname ?? "").toLowerCase();
+        const fullname = String(user.fullname ?? "").toLowerCase();
         const role = String(user.role ?? "").toLowerCase();
         const search = searchQuery.value.toLowerCase();
 
         const matchesSearch =
             username.includes(search) ||
             purok.includes(search) ||
-            firstname.includes(search) ||
-            lastname.includes(search) ||
+            fullname.includes(search) ||
             role.includes(search);
 
         const matchesPurok =
@@ -131,11 +129,11 @@ const goToPage = (page) => {
                     <tbody>
                         <tr v-for="(profile, index) in paginatedUsers" :key="index" @click="openUpdateUser(profile)"
                            class=" border-y hover:bg-blue-50 cursor-pointer h-12 ">
-                            <td class="p-3 truncate">{{ profile.firstname }} {{ profile.lastname }}</td>
+                            <td class="p-3 truncate">{{ profile.fullname }}</td>
                             <td class="p-3 truncate">{{ profile.purok }}</td>
                             <td class="p-3 truncate">{{ profile.role }}</td>
                             <td class="p-3 truncate">
-                                0{{ profile.contact_number.slice(0, 1) }}-{{ profile.contact_number.slice(1, 4) }} {{
+                                0{{ profile.contact_number.slice(0, 1) }}-{{ profile.contact_number.slice(1, 4) }}-{{
                                     profile.contact_number.slice(4, 7) }}-{{ profile.contact_number.slice(7, 10) }}
                             </td>
                         </tr>

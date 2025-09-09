@@ -28,8 +28,7 @@ class UserFactory extends Factory
         $envPassword = config('custom.admin_password');
 
         return [
-            'firstname' => 'Jaira',
-            'lastname' => 'Gallegos',
+            'fullname' => 'Jaira Gallegos',
             'role' => 'admin',
             'purok' => '1',
             'username' => $envUsername,

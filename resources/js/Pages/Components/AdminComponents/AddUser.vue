@@ -31,8 +31,7 @@ const roleOption = [
 
 // Form using useForm
 const form = useForm({
-    firstname: "",
-    lastname: "",
+    fullname: "",
     role: "",
     purok: "",
     username: "",
@@ -44,8 +43,7 @@ const form = useForm({
 // Prefill form if editing
 onMounted(() => {
     if (props.user) {
-        form.firstname = props.user.firstname || "";
-        form.lastname = props.user.lastname || "";
+        form.fullname = props.user.fullname || "";
         form.role = props.user.role || "";
         form.purok = props.user.purok || "";
         form.username = props.user.username || "";
@@ -88,11 +86,10 @@ const submitForm = () => {
             </h2>
 
             <form @submit.prevent="submitForm" class="flex flex-col gap-4">
-                <div class=" grid grid-cols-2 gap-2">
-                    <TextInput placeholder="Firstname" name="firstname" v-model="form.firstname"
-                        :message="form.errors.firstname" />
-                    <TextInput placeholder="Lastname" name="lastname" v-model="form.lastname"
-                        :message="form.errors.lastname" />
+                <div>
+                    <TextInput placeholder="Full Name" name="fullname" v-model="form.fullname"
+                        :message="form.errors.fullname" />
+
                 </div>
                 <div class=" grid grid-cols-2 gap-2">
                     <TextInput placeholder="Purok" name="purok" v-model="form.purok" :message="form.errors.purok" />

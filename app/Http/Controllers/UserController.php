@@ -11,7 +11,7 @@ class UserController extends Controller
     public function index()
     {
         // Use consistent roles
-        $users = User::whereIn('role', ['admin', 'bns', 'bhw', 'rhu'])->get();
+        $users = User::all();
 
         return Inertia::render('Admin/User', [
             'users' => $users
@@ -23,8 +23,7 @@ class UserController extends Controller
         sleep(1);
 
         $fields = $request->validate([
-            'firstname'       => 'required|string',
-            'lastname'        => 'required|string',
+            'fullname'        => 'required|string',
             'purok'           => 'required|integer|min:1',
             'role'            => 'required|in:admin,bns,bhw,rhu,parent', // fixed
             'contact_number'  => 'required|digits:10',
@@ -46,8 +45,7 @@ class UserController extends Controller
         sleep(1);
 
         $fields = $request->validate([
-            'firstname'       => 'required|string',
-            'lastname'        => 'required|string',
+            'fullname'        => 'required|string',
             'purok'           => 'required|integer|min:1',
             'role'            => 'required|in:admin,bns,bhw,rhu,parent', // fixed
             'contact_number'  => 'required|digits:10',
