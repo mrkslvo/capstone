@@ -4,11 +4,11 @@ import { ref, computed } from "vue";
 import * as icons from "lucide-vue-next";
 import { usePage } from "@inertiajs/vue3";
 import Message from "../Components/Message.vue";
-
 import viewAllSchedBasedOnDate from "../Components/AdminComponents/viewAllSchedBasedOnDate.vue";
 
 const page = usePage();
 const user = computed(() => page.props.auth.user);
+
 
 const showAllSched = ref(false);
 const allSchedBasedOnDate = ref({});
@@ -26,7 +26,6 @@ const props = defineProps({
     users: Array,
 });
 
-console.table(props.users)
 
 /* ---------------------------
    Utility Functions
@@ -234,7 +233,7 @@ const activities = ref([
         <!-- Middle Row -->
         <div class="grid grid-cols-2 gap-4 overflow-hidden">
             <!-- Calendar -->
-            <div class="bg-white rounded-2xl shadow-md p-2">
+            <div class="bg-white rounded-2xl shadow-md ">
                 <VCalendar
                     :attributes="attrs"
                     expanded
@@ -346,5 +345,5 @@ const activities = ref([
         @close="showAllSched = false"
     />
 
-    <Message v-if="messages" @close="messages = false"/>
+    <Message v-if="messages" :loggedUser="user" :users="props.users" @close="messages = false"/>
 </template>

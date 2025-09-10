@@ -9,6 +9,7 @@ use App\Http\Controllers\ImmunizationDetailsController;
 use App\Http\Controllers\ImmunizationRecordController;
 use App\Http\Controllers\MaternalProfileController;
 use App\Http\Controllers\MaternalRecordController;
+use App\Http\Controllers\MessageController;
 use App\Http\Controllers\PostnatalRecordController;
 use App\Http\Controllers\PrenatalRecordController;
 use App\Http\Controllers\ReportController;
@@ -65,6 +66,9 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::post('/admin/new-maternal-record/{maternalProfile}', [MaternalRecordController::class, 'addRecord'])->name('maternalRecord.addRecord');
     Route::put('/admin/update-maternal-record/{maternalRecord}', [MaternalRecordController::class, 'updateRecord'])->name('maternalRecord.updateRecord');
     Route::put('/admin/update-maternal-delivery/{delivery}', [DeliveryController::class, 'updateDelivery'])->name('delivery.update');
+
+    Route::get('/messages/{user}', [MessageController::class, 'index'])->name('messages.index');
+    Route::post('/messages/{user}', [MessageController::class, 'store'])->name('messages.store');
 });
 
 // Parent Dashboard
