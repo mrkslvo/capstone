@@ -23,15 +23,9 @@ class MessageController extends Controller
             ->orderBy('created_at', 'asc')
             ->get();
 
-
-        dd($messages);
-
-
-        return Inertia::render('Admin/Dashboard', [
-            'chatUser' => $user,
-            'messages' => $messages,
-        ]);
+        return response()->json($messages); // ✅ return as JSON for Vue
     }
+
 
     public function store(Request $request, User $user)
     {
@@ -45,6 +39,5 @@ class MessageController extends Controller
             'content' => $request->content,
         ]);
 
-        return response()->json($message);
     }
 }
