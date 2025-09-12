@@ -1,7 +1,7 @@
 <script setup>
 import { ref, computed } from "vue";
 import { router } from "@inertiajs/vue3";
-import axios from "axios"; // ✅ use axios for fetching old messages
+import axios from "axios";
 
 const props = defineProps({
     users: Array,
@@ -17,7 +17,7 @@ const search = ref("");
 const messages = ref({});
 const newMessage = ref("");
 
-// authenticated user will not display
+// ✅ Filter users (exclude authenticated user)
 const filteredUsers = computed(() => {
     const list = props.users.filter((u) => u.id !== props.loggedUser.id);
     if (!search.value) return list;
@@ -28,18 +28,20 @@ const filteredUsers = computed(() => {
     );
 });
 
+// ✅ Function to fetch messages for a user
+async function fetchMessages(id) {
+    try {
+        const res = await axios.get(route("messages.index", id));
+        messages.value[id] = res.data;
+    } catch (e) {
+        console.error("Failed to fetch messages:", e);
+    }
+}
 
 async function openMessage(user) {
     selectedUser.value = user;
     toggleMessage.value = true;
-
-    // ✅ fetch all messages from backend
-    try {
-        const res = await axios.get(route("messages.index", user.id));
-        messages.value[user.id] = res.data;
-    } catch (e) {
-        console.error("Failed to fetch messages:", e);
-    }
+    await fetchMessages(user.id);
 }
 
 function backToUsers() {
@@ -55,7 +57,7 @@ async function sendMessage() {
 
     if (!messages.value[id]) messages.value[id] = [];
 
-    // show message instantly in UI
+    // ✅ Show message instantly
     messages.value[id].push({
         content,
         sender_id: props.loggedUser.id,
@@ -65,18 +67,20 @@ async function sendMessage() {
 
     newMessage.value = "";
 
-    // save to DB and reload messages
+    // ✅ Save to DB, then reload from server
     await router.post(
         route("messages.store", id),
         { content },
         {
             preserveScroll: true,
-            onSuccess: () => fetchMessages(id), // ✅ reload messages after send
+            onSuccess: async () => {
+                await fetchMessages(id);
+            },
         }
     );
 }
-
 </script>
+
 
 <template>
     <!-- Users Sidebar -->
@@ -118,6 +122,7 @@ async function sendMessage() {
             <h2 class="text-lg font-semibold text-blue-700">
                 Chat with {{ selectedUser?.fullname }}
             </h2>
+
             <button @click="backToUsers"
                 class="px-3 py-1 bg-gray-400 text-white text-sm rounded-lg shadow hover:bg-gray-500">
                 Back
